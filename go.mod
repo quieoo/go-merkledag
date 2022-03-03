@@ -12,6 +12,12 @@ require (
 	github.com/ipfs/go-ipld-cbor v0.0.3
 	github.com/ipfs/go-ipld-format v0.0.2
 	github.com/multiformats/go-multihash v0.0.10
+	metrics v0.0.0-00010101000000-000000000000
 )
 
 go 1.12
+
+replace (
+	metrics => ./../metrics/
+	github.com/ipfs/go-ipld-format => ./../go-ipld-format/
+)
