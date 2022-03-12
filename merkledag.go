@@ -4,13 +4,12 @@ package merkledag
 import (
 	"context"
 	"fmt"
-	"sync"
-
 	blocks "github.com/ipfs/go-block-format"
 	bserv "github.com/ipfs/go-blockservice"
 	cid "github.com/ipfs/go-cid"
 	ipldcbor "github.com/ipfs/go-ipld-cbor"
 	ipld "github.com/ipfs/go-ipld-format"
+	"sync"
 )
 
 // TODO: We should move these registrations elsewhere. Really, most of the IPLD
@@ -142,7 +141,6 @@ func (sg *sesGetter) Get(ctx context.Context, c cid.Cid) (ipld.Node, error) {
 	case nil:
 		// noop
 	}
-
 	return ipld.Decode(blk)
 }
 

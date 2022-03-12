@@ -20,4 +20,5 @@ go 1.12
 replace (
 	metrics => ./../metrics/
 	github.com/ipfs/go-ipld-format => ./../go-ipld-format/
+	github.com/ipfs/go-blockservice => ./../go-blockservice/
 )
