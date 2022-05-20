@@ -9,6 +9,8 @@ import (
 	cid "github.com/ipfs/go-cid"
 	ipldcbor "github.com/ipfs/go-ipld-cbor"
 	ipld "github.com/ipfs/go-ipld-format"
+	"github.com/libp2p/go-libp2p-core/peer"
+	"github.com/libp2p/go-libp2p-core/routing"
 	"sync"
 )
 
@@ -147,6 +149,20 @@ func (sg *sesGetter) Get(ctx context.Context, c cid.Cid) (ipld.Node, error) {
 // GetMany gets many nodes at once, batching the request if possible.
 func (sg *sesGetter) GetMany(ctx context.Context, keys []cid.Cid) <-chan *ipld.NodeOption {
 	return getNodesFromBG(ctx, sg.bs, keys)
+}
+
+func (sg *sesGetter) GetPeers() []peer.ID {
+	return sg.bs.GetPeers()
+}
+func (cs *sesGetter) GetBlocksFrom(ctx context.Context, keys []cid.Cid, p peer.ID) <-chan blocks.Block {
+	return cs.bs.GetBlocksFrom(ctx, keys, p)
+}
+
+func (cs *sesGetter) GetRouting() routing.ContentRouting {
+	return cs.bs.GetRouting()
+}
+func (cs *sesGetter) PeerConnect(id peer.ID) {
+	cs.bs.PeerConnect(id)
 }
 
 // Session returns a NodeGetter using a new session for block fetches.
@@ -571,3 +587,4 @@ var _ ipld.LinkGetter = &dagService{}
 var _ ipld.NodeGetter = &dagService{}
 var _ ipld.NodeGetter = &sesGetter{}
 var _ ipld.DAGService = &dagService{}
+var _ ipld.PeerGetter = &sesGetter{}
